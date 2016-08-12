@@ -36,9 +36,11 @@ function getSongs() {
     type: 'GET',
     url: '/songs',
     success: function (songs) {
+
+
       $('#song-list').empty();
       songs.forEach(function (song) {
-        $('#song-list').append('<div>' + song.title + '-' + song.artist + '</div>');
+        $('#song-list').append('<div>' + song.title + '-' + song.artist + ' // ' + song.dateAdded + '</div>');
       });
     },
 

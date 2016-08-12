@@ -13,10 +13,47 @@ app.use(bodyParser.urlencoded({ extended: true }));
  *
  * Places song into songs array
  */
+
+
 app.post('/songs', function (req, res) {
+  var d = new Date();
   var song = req.body;
-  songs.push(song);
-  res.sendStatus(200);
+  var title = song.title;
+  var dateAdded = (d.getMonth() + 1) + '-' + (d.getDate()) + '-' + d.getFullYear();
+  var artist = song.artist;
+  song.dateAdded = dateAdded;
+
+
+  if (artist === ""){
+    res.sendStatus(400);
+    alert("Please enter an Artist!");
+  }
+  else if (title === ""){
+    res.sendStatus(400);
+        alert("Please enter a Title!");
+  }
+//   else {
+//     var unique = true;
+//     for (var i = 0; i < songs.length; i++){
+//       if (title === songs[0].title){
+//         if (artist === songs[0].artist){
+//           unique = false;
+//         }
+//       }
+//
+//       if (unique){
+//         songs.push(song);
+//         console.log(songs[0].title);
+//         res.sendStatus(200);
+//       }
+//       else {
+//         res.sendStatus(400);
+//       }
+//   };
+// };
+        songs.push(song);
+        console.log(songs);
+        res.sendStatus(200);
 });
 
 app.get('/songs', function (req, res) {
