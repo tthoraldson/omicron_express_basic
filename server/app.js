@@ -23,6 +23,20 @@ app.post('/songs', function (req, res) {
   var artist = song.artist;
   song.dateAdded = dateAdded;
 
+  var unique = true;
+  for (var i = 0; i < songs.length; i++){
+    console.log("le loop");
+    if (title === songs[i].title){
+      if (artist === songs[i].artist){
+        unique = false;
+      }
+    }
+    else if (artist === songs[i].artist){
+      if (title === songs[i].title){
+        unique = false;
+      }
+    }
+  }
 
   if (artist === ""){
     res.sendStatus(400);
@@ -32,28 +46,15 @@ app.post('/songs', function (req, res) {
     res.sendStatus(400);
         alert("Please enter a Title!");
   }
-//   else {
-//     var unique = true;
-//     for (var i = 0; i < songs.length; i++){
-//       if (title === songs[0].title){
-//         if (artist === songs[0].artist){
-//           unique = false;
-//         }
-//       }
-//
-//       if (unique){
-//         songs.push(song);
-//         console.log(songs[0].title);
-//         res.sendStatus(200);
-//       }
-//       else {
-//         res.sendStatus(400);
-//       }
-//   };
-// };
+  else if(unique === false){
+    res.sendStatus(400);
+  }
+  else {
+    console.log("ELSE");
         songs.push(song);
         console.log(songs);
         res.sendStatus(200);
+  };
 });
 
 app.get('/songs', function (req, res) {
@@ -65,8 +66,6 @@ app.get('/*', function (req, res) {
 
   console.log('What is in req.params[0]?', req.params[0]);
 
-  //console.log('dirname: ', __dirname);
-  //console.log('path', path.join(__dirname, '../public', file));
   res.sendFile(path.join(__dirname, './public', file));
 });
 
